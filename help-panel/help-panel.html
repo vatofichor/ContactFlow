@@ -1,0 +1,95 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Help Panel & Articles</title>
+	<link rel="stylesheet" href="help-panel.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+	<div id="notify-copy" class="hide"></div>
+
+	<div class="fullwidth">
+		<header>
+			<h1>Help Resources</h1>
+			<a href="../contactflow.html" class="nav-link">Contactflow</a>
+			<a href="#articles" class="nav-link">Jump to Saved Articles ↓</a>
+		</header>
+
+		<section id="help-panel" class="hero" style="padding-top: 10px; flex-direction: column;">
+			<div style="display: flex; gap: 10px; margin-bottom: 10px;">
+				<input type="text" id="iframe-src" placeholder="Enter URL (https://...)" style="flex: 1;" />
+				<button onclick="updateIframeSRC()" class="btn-alt" style="width: 24%;">Update</button>
+				<button onclick="resetIframeSRC()" style="background: var(--text-muted); width: 24%;">Trash</button>
+			</div>
+			<div id="iframe-container"
+				style="width: 100%; height: 500px; border: 1px solid var(--border-color); position: relative;">
+				<p style="padding: 10px; color: var(--text-muted);">Loading Help System...</p>
+			</div>
+		</section>
+
+		<section id="articles" class="section">
+			<header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+				<h3>Saved Articles</h3>
+				<button style="width: auto; background: var(--accent-color);" onclick="toggleLinkCreator()">Link
+					Creator</button>
+			</header>
+
+			<div id="custom-buttons-container"></div>
+
+			<div id="custom-form" class="hide">
+				<hr style="border: 0; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+				<h3>Create New Link</h3>
+				<p>Add a title and URL to save it to your local dashboard.</p>
+
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+					<div>
+						<label for="buttonText">Article Title</label>
+						<input type="text" id="buttonText" placeholder="e.g. Tax Liabilities Guide">
+					</div>
+					<div>
+						<label for="templateContent">Resource URL</label>
+						<input type="text" id="templateContent" placeholder="https://...">
+					</div>
+				</div>
+
+				<div style="margin-top: 1.5rem;">
+					<label for="template_upload">Bulk Import (CSV)</label>
+					<input type="file" id="template_upload" accept="text/csv">
+				</div>
+
+				<div style="display: flex; gap: 1rem; margin-top: 1rem;">
+					<button class="btn-alt" onclick="addCustomTemplate()">Save / Import</button>
+					<button style="background: var(--text-muted);" onclick="exportTemplatesToCSV()">Export All</button>
+				</div>
+
+				<p style="font-size: 0.875rem; margin-top: 1rem;">
+					⚠️ Backup your templates regularly. Clearing browser data will erase them.
+				</p>
+			</div>
+		</section>
+	</div>
+
+	<script src="articles.js" type="text/javascript"></script>
+</body>
+
+</html>
