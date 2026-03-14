@@ -1,0 +1,219 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketing & Process Guide</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --border: #cccccc;
+            --accent: #0056b3;
+            --code-bg: #f9f9f9;
+        }
+
+        body {
+            font-family: -apple-system, sans-serif;
+            line-height: 1.5;
+            color: var(--text);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            border-bottom: 3px solid #000;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        section {
+            border: 1px solid var(--border);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .template-box {
+            background: var(--code-bg);
+            border-left: 5px solid var(--accent);
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            cursor: text;
+        }
+
+        .warning {
+            color: #d00;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 2px solid #d00;
+            padding: 5px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        /* Thick Line Header */
+        .thick-divider {
+            border: 0;
+            height: 8px;
+            background: #000;
+            margin: 40px 0 20px 0;
+        }
+
+        .big-header {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 10px 0 30px 0;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Call Protocol & Documentation Cheat Sheet</h1>
+    </header>
+
+    <main>
+        <div class="grid">
+            <section>
+                <h2>1. Verification (MANDATORY)</h2>
+                <div class="warning">Mute recording before PII discovery (SSN/EIN)</div>
+                <div class="template-box" id="verification-snippet">Level 1 (ID Verified): [email] [fullname] [bizname] [phoneNum]
+Level 2 (Account Verified): [ssn] [coid] [bizAdrr] [ein]</div>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('verification-snippet').innerText)" style="margin-top: 5px; padding: 5px 10px; cursor: pointer;">Copy to Clipboard</button>
+                <ul>
+                    <li>Ensure all 8 points are confirmed.</li>
+                    <li>Do not proceed with account changes until verified.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>2. Call Quality & Control</h2>
+                <h3>Greeting</h3>
+                <ul>
+                    <li>State name and company clearly.</li>
+                </ul>
+
+                <h3>Hold Times</h3>
+                <ul>
+                    <li>Always ask permission. Max 2-3 mins. Provide updates if longer.</li>
+                </ul>
+
+                <h3>Transfers</h3>
+                <ul>
+                    <li>Prepare the case documentation beforehand. Introduce the customer to the next tech. Share the "Primary Issue" summary and ensure a proper hand-off first.</li>
+                </ul>
+
+                <h3>No Jargon</h3>
+                <ul>
+                    <li>Say "The system is slow" (not latency) or "The app crashed" (not log divergence).</li>
+                </ul>
+            </section>
+        </div>
+
+        <section>
+            <h2>3. Case Documentation (Structure)</h2>
+            <p style="font-size: 0.95rem; margin-top: 5px; margin-bottom: 10px;">
+                Use the following template structure within the Case Notes Editor to organize your documentation. Do not
+                copy and paste this block directly.
+            </p>
+            <div class="template-box">
+                *PRIMARY ISSUE:
+                - [Summary: User is unable to log in to the payroll dashboard]
+                - [Notes: Error 404 displayed when clicking the "Run Payroll" tab. Cleared cache, issue persists.]
+
+
+                *ANCILLARY ISSUES:
+                - [Summary: User cannot print previous paystubs]
+                - [Notes: Clicking "Print" downloads a blank PDF file.]
+
+
+                *PROGRESS BLOCKERS:
+                - [Issue: Awaiting Tier 2 callback regarding the backend sync failure.]
+                - [Issue: User had to step away for a meeting.]
+
+
+                *PROPOSED RESOLUTION:
+                - [Research: KB-12345 "Blank PDFs on old browsers", searched Slack for 404 payroll]
+                - [Resolution: Escalated to T2. Instructed user to try Chrome Incognito later.]
+            </div>
+        </section>
+
+        <hr class="thick-divider">
+        <h1 class="big-header">General Troubleshooting Protocol</h1>
+
+        <div class="grid">
+            <section>
+                <h2>Search Hierarchy</h2>
+                <p><strong>1. Internal KB First:</strong> Search Knowledge Base for error codes or specific symptoms before external tools.</p>
+                <p><strong>2. Global Chat Search:</strong> Use Teams/Slack/Discord. Search support channels for recent similar cases.</p>
+                <p><strong>3. Ticketing/CMS:</strong> Search historical cases by Business Name or EIN to see a paper trail of past fixes.</p>
+                <p><strong>4. Google / AI Search:</strong> Use the exact error message in quotes for specific results.</p>
+            </section>
+
+            <section>
+                <h2>AI & Tooling</h2>
+                <p><strong>AI Prompts:</strong> Use full descriptions. Provide the "Goal," the "Error," and "What you've tried."</p>
+                <p><strong style="color: red;">No PII:</strong> Never enter names, SSNs, or EINs into AI chat tools.</p>
+                <p><strong>Data First:</strong> Always document AND prompt the model with BOTH the "Expected Result" and the "Actual Result".</p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p style="text-align: center; color: #666; font-size: 0.8rem;">Tier 1 Support Logic | V2.0</p>
+    </footer>
+
+</body>
+
+</html>

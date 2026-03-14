@@ -1,0 +1,559 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="generator" content="HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Contact Workflow</title>
+
+    <link rel="stylesheet" href="./res/styles/main.css" type="text/css">
+    <link rel="stylesheet" href="./res/styles/elements.css" type="text/css">
+    <link rel="stylesheet" href="./res/styles/modifiers.css" type="text/css">
+    <link rel="stylesheet" href="./res/styles/scratchboard.css" type="text/css">
+    </script>
+</head>
+
+<body>
+    <div id="top" onclick="" data-desc="top of the page anchor"></div>
+
+    <!-- NAVIGATION DRAWER -->
+    <label for="menu" class="menu-label small-caps">🔗 Open Links</label>
+    <form>
+        <input type="checkbox" id="menu" class="menu" style="display: none;" />
+    </form>
+
+    <div id="link-drawer" class="drawer">
+        <div class="drawer-top-half">
+            <label for="menu" class="menu-label menu-label-dark small-caps">
+                ❌ Close Drawer
+            </label>
+            <br>
+            <div id="m" data-note="second command for menu" onclick="document.getElementById('menu').click();"></div>
+            <div id="help" data-note="Open Help-Panel" onclick="window.open('./help-panel/help-panel.html', '_blank');"
+                class="hide"></div>
+            <div id="ai" data-note="Open AI Assist" onclick="window.open('./ai-assist/ai_assist.html', '_blank');"
+                class="hide"></div>
+            <div id="track" data-note="Open Leads Tracker" onclick="window.open('./leads/tracker.html', '_blank');"
+                class="hide"></div>
+            <div id="escalate" data-note="Open Escalations Drawer" onclick="toggleDrawer('t2-drawer-container');"
+                class="hide"></div>
+
+            <div id="main-nav" style="height: 25vh; overflow-y: auto;">
+                <div class="hotnav" style="font-size: 0.8em;" data-nav=""></div>
+            </div>
+        </div>
+
+        <div class="drawer-bottom-half">
+            <h2>Navigation</h2>
+
+            <ul id="persistent-links">
+                <!-- Populated by JS from nav-config.json -->
+            </ul>
+
+            <ul id="custom-links-container">
+            </ul>
+
+            <hr>
+            <a href="#" onclick="toggleLinkEditor(); return false;"
+                style="font-size: 14px; text-decoration: underline; margin-bottom: 5px; display: inline-block; color: var(--text-primary);">Manage
+                Custom Links</a>
+            <div id="link-editor-container" class="link-editor" style="display: none;">
+                <input type="text" id="link-label" class="tool-input" placeholder="Link Label" />
+                <input type="text" id="link-url" class="tool-input" placeholder="URL (https://...)" />
+                <label>Theme Color:</label>
+                <select id="link-theme" class="tool-input">
+                    <option value="">Default (None)</option>
+                    <option value="#ff4b4b">Red</option>
+                    <option value="#ff8c00">Orange</option>
+                    <option value="#ffd700">Yellow</option>
+                    <option value="#5cb85c">Green</option>
+                    <option value="#0275d8">Blue</option>
+                    <option value="#6f42c1">Purple</option>
+                    <option value="#e83e8c">Pink</option>
+                </select>
+                <button onclick="addCustomLink()" class="tool-button">Add Link</button>
+                <br><br>
+                <span style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:10px;">⚠️ Backup your
+                    links regularly. Clearing browser data will erase them.</span>
+                <button onclick="exportLinks()" class="tool-small-button">Export</button>
+                <button onclick="document.getElementById('import-file').click()"
+                    class="tool-small-button">Import</button>
+                <input type="file" id="import-file" style="display:none;" onchange="importLinks(event)"
+                    accept=".json" />
+            </div>
+        </div>
+    </div><!-- Main Fixed Navigation -->
+
+
+    <div class="pagecontent">
+        <h1><a href="./contactflow.html">Contact Workflow</a></h1>
+
+        <!-- # Pre-Beta Preparations 
+        Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta Pre-Beta 
+        -->
+
+        <div class="intro-section" id="cf-a9k12">
+            <div class="shortcut-group" id="cf-b1p9q">
+                <b onclick="run_command()" class="shortcut-key">alt + /</b>
+                <p>Start & explore the command launcher.</p>
+            </div>
+
+            <div class="shortcut-group" id="cf-c5n3x">
+                <b onclick="if(!document.getElementById('case-notes').checked)document.getElementById('case-notes').click();setTimeout(()=>document.getElementById('resolution').focus(),50)"
+                    class="shortcut-key">alt + n</b>
+                <p>Jump to Editor.</p>
+            </div>
+
+            <div class="shortcut-group" id="cf-d8m2z">
+                <b onclick="toggleDrawer('lead-drawer')" class="shortcut-key">alt + t</b>
+                <p>Toggle Phonetics Drawer.</p>
+            </div>
+
+            <div class="shortcut-group" id="cf-e7k4w">
+                <b onclick="toggleDrawer('scratch-notes-drawer')" class="shortcut-key">alt + i</b>
+                <p>Toggle ScratchNotes Drawer.</p>
+            </div>
+
+            <div class="shortcut-group" id="cf-f3l9y">
+                <b onclick="toggleDrawer('cx-survey-drawer')" class="shortcut-key">alt + y</b>
+                <p>Toggle CX Survey Drawer.</p>
+            </div>
+
+            <div class="shortcut-group">
+                <b onclick="toggleDrawer('t2-drawer-container')" class="shortcut-key">alt + u</b>
+                <p>Toggle Escalations Drawer.</p>
+            </div>
+
+            <div class="shortcut-group">
+                <b onclick="run_command(true, 'copy')" class="shortcut-key">alt + c</b>
+                <p>Copy Case Notes.</p>
+            </div>
+
+            <div class="shortcut-group">
+                <b onclick="run_command(true, 'reset')" class="shortcut-key">alt + r</b>
+                <p>Reset the page.</p>
+            </div>
+
+            <div class="shortcut-group">
+                <b onclick="run_command(true, 'menu')" class="shortcut-key">alt + m</b>
+                <p>Open/close main menu.</p>
+            </div>
+
+            <div class="shortcut-group">
+                <b onclick="FindReplace.toggle()" class="shortcut-key">alt + h</b>
+                <p>Find & Replace.</p>
+            </div>
+
+            <div class="shortcut-group">
+                <b class="shortcut-key">alt + b</b>
+                <p>Insert Bullet.</p>
+            </div>
+        </div>
+
+        <div class="accordion" id="cf-u8f23">
+            <!-- Case Notes-->
+            <a id="case-notes-anchor"></a>
+            <input type="checkbox" id="case-notes" class="accordion-button" />
+            <label for="case-notes" class="accordion-header label">Case Documentation Editor ✨</label>
+
+            <div class="accordion-content" id="cf-82hja">
+                <h2>Case Notes</h2>
+                <div id="case-notes-container">
+                    <div id="howto" data-note="Launch Case Documentation Guide"
+                        onclick="document.getElementById('guide-me').click();" class="hide"></div>
+                    * <a id="guide-me" href="./call_protocol_case_documentation.html" target="_blank"><u>Case
+                            Documentation
+                            Guide</u></a>
+                    <br><br>
+                    <hr>
+                    <!-- Find & Replace Button -->
+                    <button id="findrepl" class="tool-button" style="margin-bottom: 10px;"
+                        data-note="Launch Find & Replace Tool (Alt+H)" onclick="FindReplace.toggle()">Find & Replace
+                        (Alt+H)</button>
+                    <hr>
+
+                    <form id="notesform">
+                        <div id="note" data-note="Scroll to CaseNotes" onclick="scrollIntoView('notes');" class="hide">
+                        </div>
+
+                        <div id="notes" data-note="Scroll to CaseNotes" onclick="scrollIntoView();" class="hide">
+                        </div>
+
+                        <div id="board" data-note="Scroll to ScratchBoard"
+                            onclick="if (!document.getElementById('tools').checked) document.getElementById('tools').click(); document.getElementById('contactCodes-anchor').scrollIntoView({ behavior: 'smooth' });"
+                            class="hide">
+                        </div>
+
+                        <!-- MD-Toolbar Tools -->
+                        <div id="md-toolbar"
+                            style="margin-top: 15px; margin-bottom: 0; display: flex; flex-wrap: wrap;">
+                        </div>
+                        <textarea id="resolution" class="case-notes-input" name="notesform" placeholder="Resolution:"
+                            rows="28" class="code" autocomplete="disabled"></textarea>
+
+                        <button type="button" name="notesform" id="copy" onclick="copy_starNotes_fields()">Copy to
+                            Clipboard</button>
+
+                        <button type="button" name="notesform" id="clear"
+                            onclick="reset_form(true);toggleDrawer('cx-survey-drawer');">Clear &
+                            New Call Template</button>
+
+                        <button type="button" id="activate-escalate" onclick="run_command(true, 'escalate');"
+                            class="tool-button"
+                            style="background: var(--bg-elevated); border: 1px solid var(--glass-border); color: var(--text-primary);">Escalate</button>
+
+                        <button type="button" name="notesform" id="reset"
+                            onclick="window.location.reload();">Reset</button>
+                    </form>
+
+                    <!-- T2 Side Drawer / Form -->
+                    <div id="t2-drawer-container" class="t2-drawer">
+                        <div class="t2-header">
+                            <h3>Escalation Hand-off</h3>
+                            <button class="tool-small-button close-t2-desktop" onclick="toggleT2Drawer()">❌</button>
+                        </div>
+                        <div class="t2-content">
+                            <label>Customer Information</label>
+                            <textarea id="t2-cust-info" placeholder="Name, Callback #, etc."></textarea>
+
+                            <label>Issue Summary</label>
+                            <textarea id="t2-issue" placeholder="Brief summary of the issue"></textarea>
+
+                            <label>Troubleshooting Attempts</label>
+                            <textarea id="t2-trouble" placeholder="What has been tried"></textarea>
+
+                            <label>Reason for Escalation</label>
+                            <textarea id="t2-reason" placeholder="Why Escalation is needed"></textarea>
+
+                            <label>Notes</label>
+                            <textarea id="t2-notes" placeholder="Additional notes"></textarea>
+
+                            <button class="tool-button" onclick="copyT2Form()">Copy & Close</button>
+                        </div>
+                    </div>
+
+                    <!-- CX Survey Drawer -->
+                    <div id="cx-survey-drawer" class="t2-drawer">
+                        <div class="t2-header">
+                            <h3>CX Call Acquisition</h3>
+                            <button class="tool-small-button close-t2-desktop"
+                                onclick="toggleDrawer('cx-survey-drawer')">❌</button>
+                        </div>
+                        <div class="t2-content">
+                            <label>Caller Info</label>
+                            <input type="text" id="cx-phone" placeholder="Phone Number" class="tool-input" />
+                            <input type="text" id="cx-name" placeholder="Full Name" class="tool-input" />
+                            <input type="text" id="cx-coid" placeholder="COID" class="tool-input" />
+                            <input type="text" id="cx-email" placeholder="Email" class="tool-input" />
+                            <input type="text" id="cx-case" placeholder="Case Number" class="tool-input"
+                                maxlength="20" />
+
+                            <label>Account Details</label>
+                            <textarea id="cx-tax" placeholder="Paste in additional account details." class="tool-input"
+                                rows="3"></textarea>
+                            <label>Products</label>
+                            <input type="text" id="cx-product" placeholder="List Product(s) Affected.."
+                                class="tool-input" />
+
+                            <label class="tool-label-full">
+                                <input type="checkbox" id="cx-principal" style="width: auto; margin-right: 10px;" />
+                                Authorized User
+                            </label>
+
+                            <label>Verification</label>
+                            <span style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:10px;">
+                                ⚠️ Follow your employer's accepted industry standard guidelines for verification first.
+                            </span>
+                            <input type="text" id="cx-lvl1" placeholder="Level 1 Verication" class="tool-input" />
+                            <input type="text" id="cx-lvl2" placeholder="Know-Your-Customer Level Verification"
+                                class="tool-input" />
+
+
+                            <button class="tool-button" onclick="copyCXForm()">Copy to Resolution</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="hotnav" data-nav="{'notes':true}"></div>
+            </div>
+
+            <!-- Copy to Clipboard -->
+            <script src="./res/scripts/meta_copy_fields.js" type="text/javascript"></script>
+            <script src="./res/scripts/md_editor.js" type="text/javascript"></script>
+        </div>
+        <div class="accordion" id="cf-u8f23">
+            <!-- Case Notes-->
+            <a id="tools-anchor"></a>
+            <input type="checkbox" id="tools" class="accordion-button" />
+            <label for="tools" class="accordion-header label">Tools 🛠️</label>
+
+            <div class="accordion-content intro-section" id="cf-82hja">
+                <h2 class="label">Agent Tools</h2>
+                <div>
+                    <ul>
+                        <li>
+                            <!-- DRAWER LAUNCHERS (Replacing Templates) -->
+                            <div id="drawer-launchers" class="tool-drawer center-align">
+                                <h2>Drawer Launchers</h2>
+                                <div data-rdf-launcher="lead-drawer" id="abc" data-rdf-label="Phonetics"
+                                    data-rdf-hotkey="alt+t" data-rdf-note="Open Phonetics Drawer"
+                                    style="display:inline-block; margin: 5px;"></div>
+                                <div data-rdf-launcher="cx-survey-drawer" id="kyc" data-rdf-label="CX Survey"
+                                    data-rdf-hotkey="alt+y" data-rdf-note="Open CX Survey Drawer"
+                                    style="display:inline-block; margin: 5px;"></div>
+                                <div data-rdf-launcher="t2-drawer-container" id="t2" data-rdf-label="Escalations"
+                                    data-rdf-hotkey="alt+u" data-rdf-note="Open Escalations Drawer"
+                                    style="display:inline-block; margin: 5px;"></div>
+                                <div data-rdf-launcher="scratch-notes-drawer" id="scratch" data-rdf-label="ScratchNotes"
+                                    data-rdf-hotkey="alt+i" data-rdf-note="Open ScratchNotes"
+                                    style="display:inline-block; margin: 5px;"></div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="tool-drawer">
+                                <div>
+                                    <!-- ScratchBoard-->
+
+                                    <div id="contactCodes-anchor">
+                                        <div id="code"
+                                            onclick="document.getElementById('contactCodes-anchor').scrollIntoView({ behavior: 'smooth' });">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <!-- ScratchBoard-->
+                                        <h2>ScratchBoard</h2>
+
+                                        <div id="notifications-scratchboard">
+                                        </div>
+                                        <span
+                                            style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:10px;margin-top:5px;">
+                                            ⚠️ Backup your board regularly. Clearing browser data will erase it.<br>
+                                            <i>Explainer: Use the ScratchBoard to save snippets. Type
+                                                <b>scratchboard</b> in
+                                                the
+                                                command
+                                                launcher (alt+/) to quickly pull your board notes anywhere.</i>
+                                        </span>
+
+                                        <div id="scratchboard-list" class="roundit">
+                                        </div>
+
+                                        <label for="editor-scratchboard-toggle"
+                                            class="btn-scratchboard roundit">Editor</label>
+                                        <input type="checkbox" id="editor-scratchboard-toggle" hidden>
+
+                                        <div id="editor-scratchboard">
+                                            <textarea rows="15" id="text-input-scratchboard"
+                                                class="padding-small"></textarea>
+
+                                            <div style="margin-top: 8px;">
+                                                <button id="save-btn-scratchboard" class="btn-scratchboard roundit">Save
+                                                </button>
+                                                <label for="scratchboardImport" class="btn-scratchboard roundit"
+                                                    style="cursor: pointer; display: inline-block;">Choose
+                                                    File</label>
+                                                <input type="file" id="scratchboardImport" hidden>
+                                                <button id="scratchboardImportBtn" class="btn-scratchboard roundit"
+                                                    style="border: none; display: inline-block;">Import</button>
+                                                <button onclick="exportScratchBoard()" class="btn-scratchboard roundit"
+                                                    style="border: none; display: inline-block;">Export</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <div class="tool-drawer">
+                                <label for="iii"><b>Remove Spaces</b></label>
+                                <textarea id="iii" class="tool-input" placeholder="Text to Sanitize"
+                                    rows="3"></textarea><br>
+                                <button onclick="removeSpaces()" class="tool-button">Go</button> <button
+                                    onclick="(function(){document.getElementById('iii').value = '';})()"
+                                    class="tool-button">Reset</button>
+
+                                <div>
+                                    <b>Copy Modified Text</b>:<button class="tool-small-button"
+                                        onclick="copyText(document.getElementById('outputText').textContent)">📋</button>
+                                    <span id="outputText"></span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li style="list-style: none; display: inline">
+                            <hr>
+                        </li>
+
+                        <li>
+                            <div id="timer-anchor"></div>
+
+                            <div class="tool-drawer center-align">
+                                <h1>Timer</h1>
+
+                                <div>
+                                    <span>(Accepts: .ogg .mp3 .mp4
+                                        .wav)</span><br>
+                                    <label for="sound-url" style="font-size: 12px;">Notification Sound
+                                        URL</label>: <input type="text" class="tool-input" id="sound-url"
+                                        value="https://www.myinstants.com/media/sounds/tmp_7901-951678082.mp3"
+                                        placeholder="https://www.myinstants.com/media/sounds/tmp_7901-951678082.mp3" />
+                                    <br>
+                                    <label for="secondsInput">Set Timer
+                                        (seconds):</label> <button id="2min" class="tool-small-button"
+                                        onclick="document.getElementById('secondsInput').value = 120;">
+                                        2min</button> <button class="tool-small-button"
+                                        onclick="document.getElementById('secondsInput').value = 180;">
+                                        3min</button> <button class="tool-small-button"
+                                        onclick="document.getElementById('secondsInput').value = 900;">
+                                        15min</button> <button class="tool-small-button"
+                                        onclick="document.getElementById('secondsInput').value = 3600;">
+                                        60min</button> <input type="number" id="secondsInput" class="tool-input"
+                                        placeholder="Enter total seconds" />
+                                </div><span id="timeDisplay">00:00:00</span>
+
+                                <div>
+                                    <button id="timer" class="tool-button">start /
+                                        restart</button>
+                                </div>
+
+                                <div class="notice">
+                                    Timer accuracy degrades with
+                                    low-power/economy/memory-saving settings
+                                    present on your system.
+                                </div>
+                            </div>
+                        </li>
+
+                        <li style="list-style: none; display: inline">
+                            <div class="tool-drawer center-align">
+                                <button class="tool-button" style="width:100%; text-align: center; margin-bottom: 10px;"
+                                    onclick="run_command(true, 'track')">Leads Tracker</button>
+                            </div>
+
+                            <div id="lead-drawer" class="t2-drawer">
+                                <div class="t2-header">
+                                    <h3>Phonetic Alphabet</h3>
+                                    <button class="tool-small-button close-t2-desktop"
+                                        onclick="toggleDrawer('lead-drawer')">❌</button>
+                                </div>
+                                <div class="t2-content"
+                                    style="padding: 0; display: flex; flex-direction: column; height: calc(100% - 40px);">
+                                    <iframe src="./res/phonetics.html"
+                                        style="width: 100%; height: 100%; flex-grow: 1; border: none;"></iframe>
+                                </div>
+                            </div>
+
+                            <div id="scratch-notes-drawer" class="t2-drawer">
+                                <div class="t2-header">
+                                    <h3>ScratchNotes</h3>
+                                    <button class="tool-small-button close-t2-desktop"
+                                        onclick="toggleDrawer('scratch-notes-drawer')">❌</button>
+                                </div>
+                                <div class="t2-content" id="scratch-notes-drawer-content"
+                                    style="padding-top: 10px; overflow-y: auto; display: flex; flex-direction: column;">
+                                    <div id="scratch-notes-list"
+                                        style="margin-bottom: 10px; display: flex; flex-direction: column; gap: 8px;">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                    <span
+                                        style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:10px;padding-left:2px;">
+                                        ⚠️ Backup your notes regularly. Clearing browser data will erase them.
+                                    </span>
+
+                                    <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 15px;">
+                                        <button onclick="toggleScratchNotesEditor()" class="btn-scratchboard roundit"
+                                            style="border: none; flex-grow: 1;">+
+                                            New / Edit</button>
+                                        <label for="scratchNotesImport" class="btn-scratchboard roundit"
+                                            style="cursor: pointer; margin: 0;">Import</label>
+                                        <input type="file" id="scratchNotesImport" accept=".json"
+                                            onchange="importScratchNotes(event)" hidden>
+                                        <button onclick="exportScratchNotes()" class="btn-scratchboard roundit"
+                                            style="border: none; margin: 0;">Export</button>
+                                    </div>
+
+                                    <div id="editor-scratch-notes" style="display: none;">
+                                        <input type="hidden" id="scratch-notes-edit-index" value="-1" />
+                                        <input type="text" id="scratch-notes-title" class="tool-input"
+                                            placeholder="Template Title" style="margin-bottom: 8px;" />
+                                        <textarea rows="8" id="scratch-notes-content" class="padding-small tool-input"
+                                            placeholder="Paste template text here..."></textarea>
+                                        <button onclick="saveScratchNote()" class="btn-scratchboard roundit"
+                                            style="border: none; margin-top: 8px;">Save Template</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <div class="hotnav" data-nav="{'leadtool-anchor':true}"></div>
+                </div><br>
+            </div>
+        </div>
+    </div> <!--END PAGE CONTENT-->
+
+    <div class="hotnav" data-nav="{'help-panel':true}"></div>
+
+
+
+
+    <div id="footer" style="background-color: #333; padding: 8px; color: #666;">
+        Copyright 2025 vatofichor - Sebastian Mass.
+    </div>
+
+    <!-- Configuration loaded globally first -->
+    <script src="config/nav_config.js" type="text/javascript"></script>
+    <script src="res/scripts/set_nav.js" type="text/javascript"></script>
+    <script src="res/scripts/custom_navigation.js" type="text/javascript"></script>
+    <script src="res/scripts/timer_controller.js" type="text/javascript"></script>
+    <script src="res/scripts/space_remover.js" type="text/javascript"></script>
+    <script src="res/scripts/anchor_navigation.js" type="text/javascript"></script>
+    <script src="res/scripts/drawer_toggler.js" type="text/javascript"></script>
+    <script>
+        // Disable default save action
+        document.addEventListener('keydown', function (event) {
+            if (event.ctrlKey && event.key === 's') {
+                event.preventDefault();
+            }
+        });
+    </script>
+    <script src="res/scripts/editor_init.js" type="text/javascript"></script>
+    <script src="res/scripts/clipboard_actions.js" type="text/javascript"></script>
+    <script src="res/scripts/user_commands.js" type="text/javascript"></script>
+    <script src="res/scripts/keyboard_shortcuts.js" type="text/javascript"></script>
+    <script src="res/scripts/scratchboard.js" type="text/javascript"></script>
+    <script src="res/scripts/scratch_notes.js" type="text/javascript"></script>
+    <script src="res/scripts/drawers.js" type="text/javascript"></script>
+    <script src="res/scripts/find_replace.js" type="text/javascript"></script>
+    <script src="res/scripts/md-toolbar-tool-generator.js" type="text/javascript"></script>
+    <script src="res/scripts/md-toolbar-fixed-scroll.js" type="text/javascript"></script>
+    <script>
+        // Randomly set the body background to one of the candy palette colors
+        (function () {
+            const candyColors = ["#5E4444", "#5E5044", "#5E5C44", "#445E4D", "#44525E", "#48445E", "#58445E"];
+            const randomColor = candyColors[Math.floor(Math.random() * candyColors.length)];
+            document.body.style.backgroundColor = randomColor;
+        })();
+    </script>
+</body>
+
+</html>

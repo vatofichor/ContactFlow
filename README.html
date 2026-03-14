@@ -1,0 +1,438 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!--
+  ## License
+  This project is licensed under the MIT License.
+
+  ### Attribution
+  * Author: Sebastian Mass
+  * GitHub: vatofichor
+  * Requirement: The copyright notice and license must remain with the software in its parts or whole. This is a non-viral license; it does not apply to your entire product, only to the code sourced from this repository.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContactFlow Guide</title>
+    <link rel="stylesheet" href="res/styles/main.css">
+    <link rel="stylesheet" href="res/styles/elements.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --font-main: 'Inter', sans-serif;
+            --font-headings: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            padding: 20px;
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: #f6f6f6;
+            background: var(--bg-deep);
+        }
+
+        .guide-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: var(--glass-bg);
+            padding: 60px;
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            font-family: var(--font-headings);
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .build-badge {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            margin-top: 10px;
+            border: 1px solid var(--accent);
+        }
+
+        /* TOC Styling */
+        nav.toc {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 50px;
+        }
+
+        nav.toc h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav.toc ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        nav.toc a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.95rem;
+            opacity: 0.7;
+            transition: opacity 0.2s, color 0.2s;
+        }
+
+        nav.toc a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        h2 {
+            font-family: var(--font-headings);
+            font-weight: 600;
+            font-size: 1.8rem;
+            margin-top: 60px;
+            margin-bottom: 25px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        h3 {
+            font-family: var(--font-headings);
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-top: 40px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            border-radius: 20px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .card h4 {
+            margin: 0 0 10px 0;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--primary);
+        }
+
+        .static-feature {
+            border-left: 4px solid var(--primary);
+            padding-left: 20px;
+            margin: 30px 0;
+            background: rgba(56, 189, 248, 0.02);
+            padding: 20px 20px 20px 40px;
+            border-radius: 0 16px 16px 0;
+        }
+
+        pre {
+            font-family: var(--font-mono);
+            background: #0d1117;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+            border: 1px solid #30363d;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .dev-badge {
+            background: #238636;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .signature-block {
+            font-family: var(--font-mono);
+            white-space: pre;
+            margin-top: 30px;
+            line-height: 1.2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="guide-container">
+        <header>
+            <h1>ContactFlow</h1>
+
+            <p style="margin-top: 20px; font-size: 1.2rem; opacity: 0.8;">
+                Your unified toolkit for faster, easier case resolution.
+            </p>
+        </header>
+
+        <nav class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#core-aspects">Core Features</a></li>
+                <li><a href="#static-features">Integrated Tools</a></li>
+                <li><a href="#shortcuts">Keyboard Shortcuts</a></li>
+                <li><a href="#license">License & Settings</a></li>
+            </ul>
+        </nav>
+
+        <section id="core-aspects">
+            <h2>Core Features</h2>
+            <p>
+                ContactFlow is built so you never have to wait for a page to load. Everything you need to document,
+                research, and escalate a call is available instantly right from your workspace.
+            </p>
+            <div class="grid">
+                <div class="card">
+                    <h4>Case Notes Editor</h4>
+                    <p>
+                        A built-in editor specifically designed for taking live call notes. It features a formatting
+                        toolbar for lists and bold text, and a handy Find & Replace tool to quickly fix typos before you
+                        copy your final notes.
+                    </p>
+                </div>
+                <div class="card">
+                    <h4>ScratchNotes</h4>
+                    <p>
+                        Your personal template drawer. Save your most-used greetings, troubleshooting steps, or closing
+                        statements here. Open it instantly using the shortcut, click the note you need, and it drops
+                        right into your case.
+                    </p>
+                </div>
+                <div class="card">
+                    <h4>Command Launcher</h4>
+                    <p>
+                        Press <code>Alt + /</code> anywhere to bring up the command palette. It's the fastest way to
+                        trigger a specific tool or jump to a section of the page without touching your mouse.
+                    </p>
+                </div>
+                <div class="card">
+                    <h4>ScratchBoard</h4>
+                    <p>
+                        A safe, temporary workspace. When you need to sanitize customer data, strip weird formatting
+                        from an email, or just stage some text, use the command <code>scratchboard</code> to pull this
+                        editor up.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="static-features">
+            <h2>Integrated Tools <span style="font-size: 0.8rem; opacity: 0.5;">(Your daily drivers)</span></h2>
+            <p>
+                ContactFlow has several built-in modules designed specifically to speed up your most common tasks.
+            </p>
+
+            <div class="static-feature">
+                <h3>🔍 AI Assist</h3>
+                <p>
+                    A dedicated research panel to help you look up complex policies, hardware specs, or knowledge
+                    articles without having to open new tabs or lose your place in your current case notes.
+                </p>
+            </div>
+
+            <div class="static-feature">
+                <h3>📚 Help & Guides</h3>
+                <p>
+                    The Help-Panel acts as your quick-reference hub. It includes searchable documentation and direct
+                    links out to the support portals you need most.
+                </p>
+            </div>
+
+            <div class="static-feature">
+                <h3>⚡ Speed & Safety</h3>
+                <p>
+                    Because ContactFlow is so incredibly fast, it saves your templates locally to your browser.
+                    <strong>Always remember to use the Export buttons</strong> in ScratchNotes and ScratchBoard to back
+                    up your custom work in case your browser cache gets cleared!
+                </p>
+            </div>
+        </section>
+
+        <section id="shortcuts">
+            <h2>Keyboard Shortcuts</h2>
+            <p>Master these to fly through your workflow without lifting your hands from the keyboard.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shortcut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Alt + /</code></td>
+                        <td>Open the Global Command Palette</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + i</code></td>
+                        <td>Open your ScratchNotes templates</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + n</code></td>
+                        <td>Jump down to the Case Notes editor</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + c</code></td>
+                        <td>Copy your entire Case Note to your clipboard</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + t</code></td>
+                        <td>Open the Phonetic Alphabet helper</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + y</code></td>
+                        <td>Open the CX Survey script</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + u</code></td>
+                        <td>Open the Escalation form</td>
+                    </tr>
+                    <tr>
+                        <td><code>Alt + h</code></td>
+                        <td>Toggle the Find & Replace tool</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <footer id="license">
+            <div class="license-block">
+                <h3>License</h3>
+                <p>
+                    This project is licensed under the <strong>MIT License</strong>.
+                </p>
+                <p>
+                    <strong>Attribution:</strong> Sebastian Mass ([vatofichor](https://github.com/vatofichor))<br>
+                    <strong>Requirement:</strong> The copyright notice and license must remain with the software in its
+                    parts or whole. This is a non-viral license. | <a href="./site-map.html" target="_blank"
+                        style="color: var(--primary);">View Site Map</a>
+                </p>
+                <p style="margin-top: 15px; font-style: italic; opacity: 0.9; color: var(--accent);">
+                    ~ "Prompted from imagination to reality using Gemini AI. You are in control now." - <a
+                        href="https://gemini.google.com/" target="_blank"
+                        style="color: var(--primary); text-decoration: underline;">Gemini Labs</a>
+                </p>
+            </div>
+
+            <div class="signature-block">
+                #&nbsp;Copyright (c) 2026:
+                #&nbsp;vatofichor&nbsp;-&nbsp;Sebastian Mass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&gt;_&lt;]
+                #&nbsp;&amp;&nbsp;Assisted By Gemini Antigravity&nbsp;/|\ </div>
+        </footer>
+    </div>
+</body>
+
+</html>
