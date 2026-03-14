@@ -1,0 +1,268 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Tracker</title>
+    <style>
+        :root {
+            --bg-body: #1e1e1e;
+            --bg-panel: #2d2d30;
+            --border-color: #3f3f46;
+            --text-main: #d4d4d4;
+            --text-muted: #9cdcfe;
+            --accent: #007acc;
+            --accent-hover: #0098ff;
+            --checkbox-size: 24px;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .toolbar-left,
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        select,
+        button {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        select:focus,
+        button:hover {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        button#reset-btn {
+            font-size: 16px;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+        }
+
+        .row-label {
+            width: 80px;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        input[type="checkbox"] {
+            width: var(--checkbox-size);
+            height: var(--checkbox-size);
+            cursor: pointer;
+            accent-color: var(--accent);
+            margin: 0;
+        }
+
+        .signature {
+            margin-top: 30px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <a href="../contactflow.html"
+                    style="color: var(--accent); text-decoration: none; font-weight: bold; margin-right: 15px;">&larr;
+                    Contactflow</a>
+                <label for="leads-select">Leads per week:</label>
+                <select id="leads-select">
+                    <!-- Options populated by JS -->
+                </select>
+            </div>
+            <div class="toolbar-right">
+                <button id="reset-btn" title="Reset all checkboxes">🗑️</button>
+            </div>
+        </div>
+
+        <div class="grid-container" id="grid">
+            <!-- Grid populated by JS -->
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'tracker_state';
+        const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+        let state = [];
+        let numLeads = 4;
+
+        const leadsSelect = document.getElementById('leads-select');
+        const resetBtn = document.getElementById('reset-btn');
+        const grid = document.getElementById('grid');
+
+        function initSelect() {
+            for (let i = 1; i <= 30; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                leadsSelect.appendChild(option);
+            }
+            leadsSelect.value = numLeads;
+        }
+
+        function loadState() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    state = parsed.state || [];
+                    numLeads = parsed.numLeads || 4;
+                } catch (e) {
+                    console.error("Failed to parse storage, resetting.");
+                    initState();
+                }
+            } else {
+                initState();
+            }
+            leadsSelect.value = numLeads;
+            if (state.length !== 4 || (state[0] && state[0].length !== numLeads)) {
+                initState();
+            }
+        }
+
+        function initState() {
+            state = [];
+            for (let w = 0; w < 4; w++) {
+                const rowArr = [];
+                for (let l = 0; l < numLeads; l++) {
+                    rowArr.push(false);
+                }
+                state.push(rowArr);
+            }
+            saveState();
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ state, numLeads }));
+        }
+
+        function renderGrid() {
+            grid.innerHTML = '';
+            state.forEach((weekData, wIndex) => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'row';
+
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'row-label';
+                labelDiv.textContent = weeks[wIndex];
+                rowDiv.appendChild(labelDiv);
+
+                const cbGroup = document.createElement('div');
+                cbGroup.className = 'checkbox-group';
+
+                weekData.forEach((isChecked, lIndex) => {
+                    const cb = document.createElement('input');
+                    cb.type = 'checkbox';
+                    cb.checked = isChecked;
+                    cb.addEventListener('change', (e) => {
+                        state[wIndex][lIndex] = e.target.checked;
+                        saveState();
+                    });
+                    cbGroup.appendChild(cb);
+                });
+
+                rowDiv.appendChild(cbGroup);
+                grid.appendChild(rowDiv);
+            });
+        }
+
+        leadsSelect.addEventListener('change', (e) => {
+            numLeads = parseInt(e.target.value, 10);
+            localStorage.removeItem(STORAGE_KEY);
+            initState();
+            renderGrid();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset all checkboxes?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                initState();
+                renderGrid();
+            }
+        });
+
+        // Initialize
+        initSelect();
+        loadState();
+        renderGrid();
+    </script>
+
+</body>
+
+</html>
