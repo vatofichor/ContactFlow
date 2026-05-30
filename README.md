@@ -27,26 +27,7 @@ Driven by the custom **Reflexive DOM Framework (RDF)**, ContactFlow operates ent
 The application is built on several interconnected core systems that maintain logic-density without relying on heavy external libraries.
 
 ### 1. Reflexive DOM Framework (RDF)
-The RDF makes the dense, single-page interface actionable. It consists of:
-*   **Drawers (`drawers.js` & `drawer_toggler.js`):** Slide-out panels for auxiliary tools (like the Phonetic Alphabet or CX Surveys). Drawer states are managed dynamically via `data-rdf-launcher` attributes.
-*   **Anchors (`anchor_navigation.js`):** Hijacks standard hash navigation (`#`) to provide smooth scrolling across the dense layout without triggering page reloads.
-*   **Command Launcher (`user_commands.js`):** A centralized `Alt + /` prompt that routes commands to specific DOM elements or Javascript functions globally.
-*   **Accessibility (`keyboard_shortcuts.js`):** Global event listeners mapping `Alt+Key` combinations to RDF actions.
-
-### 2. Navigation Injection System
-The dynamic sidebar navigation is not hardcoded. 
-*   It is powered by `set_nav.js`, which fetches structural logic from `config/nav_config.json`.
-*   User-defined custom links are managed by `custom_navigation.js` allowing operators to extend the navigator dynamically.
-
-### 3. Markdown Editor Environment
-The core documentation space (`index.html` main view).
-*   **Engine:** `md_editor.js` and `editor_init.js` handle formatting syntax (Markdown bolding, auto-bulleting).
-*   **Tooling:** `md-toolbar-tool-generator.js` and `md-toolbar-fixed-scroll.js` generate the sticky interaction buttons above the active text area.
-*   **Utilities:** Integrated `find_replace.js` for rapid typos correction before passing data to the clipboard (`clipboard_actions.js`).
-
-### 4. Independent Tooling Containers
-*   **ScratchBoard (`scratchboard.js`):** A temporary data sanitization space with its own editor.
-*   **ScratchNotes (`scratch_notes.js`):** The custom template manager. Replaces legacy hardcoded macros with a dynamic, user-editable LocalStorage template system.
+See [reflexive-dom-framework](https://github.com/vatofichor/reflexive-dom-framework.git) for more info on RDF.
 
 ---
 
