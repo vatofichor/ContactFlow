@@ -1,0 +1,94 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Container with 20 Children Divs</title>
+    <style>
+        .parent {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 612px;
+            /* Optional: adding a border and some margin to visualize the parent container */
+            border: 2px solid red;
+            padding: 10px;
+            margin: 20px;
+        }
+
+        .child {
+            width: 150px;
+            height: 150px;
+            /* Optional: adding margin to separate the children visually within the flex layout */
+            margin: 0px;
+            /* Note: The background color is set via inline style attribute as requested */
+            border: 1px solid black;
+        }
+
+        /*Used in leads.html*/
+        :root {
+            --bg-base: #050505;
+            --bg-hover: #121212;
+            --text-hidden: #1a1a1a;
+            --border-subtle: #0f0f0f;
+
+            --candy-red: #D9A5A5;
+            --candy-orange: #D9B9A5;
+            --candy-yellow: #D9D2A5;
+            --candy-green: #A5D9B9;
+            --candy-blue: #A5C4D9;
+            --candy-indigo: #A5A9D9;
+            --candy-violet: #C7A5D9;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="child" style="background: var(--bg-base);">base 050505</div>
+        <div class="child" style="background: var(--bg-hover);">hover 121212</div>
+        <div class="child" style="background: var(--border-subtle); color: white;">border 0f0f0f</div>
+        <div class="child" style="background: var(--candy-blue);">candy-blue A5C4D9</div>
+        <div class="child" style="background: var(--candy-green);">candy-green A5D9B9</div>
+        <div class="child" style="background: var(--candy-indigo); color: white;">candy-indigo A5A9D9</div>
+        <div class="child" style="background: var(--candy-orange);">candy-orange D9B9A5</div>
+        <div class="child" style="background: var(--candy-red);">candy-red D9A5A5</div>
+        <div class="child" style="background: var(--candy-violet); color: white;">candy-violet C7A5D9</div>
+        <div class="child" style="background: var(--candy-yellow); color: white;">candy-yellow D9D2A5</div>
+        <div class="child" style="background: var(--text-hidden);">text-hidden 1a1a1a</div>
+    </div>
+    <div class="parent">
+        <div class="child" style="background: #1e6cff;">primary 1e6cff</div>
+        <div class="child" style="background: #0073e6;">primary light 0073e6</div>
+        <div class="child" style="background: #005bb5; color: white;">primary dark 005bb5</div>
+        <div class="child" style="background: #00b33c;">secondary 00b33c</div>
+        <div class="child" style="background: #00e64d;">secondary light 00e64d</div>
+        <div class="child" style="background: #00892e; color: white;">secondary dark 00892e</div>
+        <div class="child" style="background: #2c9bba;">accent 2c9bba</div>
+        <div class="child" style="background: #56bbd7;">accent light 56bbd7</div>
+        <div class="child" style="background: #1d677c; color: white;">accent dark 1d677c</div>
+        <div class="child" style="background: #222222; color: white;">Dark gray for general text 222222</div>
+        <div class="child" style="background: #dddddd;">Darker gray for headings dddddd</div>
+        <div class="child" style="background: #f4f4f4;">Light gray for backgrounds f4f4f4</div>
+        <div class="child" style="background: #404040;">Light gray for borders 404040</div>
+        <div class="child" style="background: #f4f4f9;">cool white f4f4f9</div>
+        <div class="child" style="background: #ffffff;">Pure white ffffff</div>
+        <div class="child" style="background: #0e0e0e; color: white;">Off black 0e0e0e</div>
+        <div class="child" style="background: #000000; color: white;">Pure black 000000</div>
+    </div>
+</body>
+
+</html>

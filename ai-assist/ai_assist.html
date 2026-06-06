@@ -1,0 +1,653 @@
+<!--
+  MIT License
+
+  Copyright (c) 2026:
+  vatofichor - Sebastian Mass     [>_<]
+  & Assisted By Gemini Antigravity /|\
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI Assist - Full Viewport</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: 'Helvetica Neue', Arial, sans-serif;
+			font-size: 18px;
+			line-height: 1.6;
+			margin: 0;
+			padding: 0;
+			background-color: #f4f4f9;
+			color: #333;
+		}
+
+		.notes {
+			max-width: 900px;
+			margin: 50px auto;
+			background-color: #fff;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		input,
+		textarea,
+		button {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border-radius: 6px;
+			border: 1px solid #ccc;
+		}
+
+		button {
+			cursor: pointer;
+			background-color: DodgerBlue;
+			color: white;
+			border: none;
+			font-size: 16px;
+			font-weight: bold;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #005bb5;
+		}
+
+		.btn-template {
+			width: 50%;
+			height: auto;
+			min-height: 40px;
+		}
+
+		@media (max-width: 900px) {
+			.btn-template {
+				width: 100%;
+			}
+		}
+
+		.btn-small {
+			max-width: 33%;
+		}
+
+		textarea {
+			resize: vertical;
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 50px auto;
+			background-color: #fff;
+			display: inline-block;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+
+		.accordion .label {
+			display: block;
+			max-width: 300px;
+			min-width: 150px;
+		}
+
+		code {
+			background-color: #f4f4f4;
+			/* Light gray background */
+			color: #333;
+			/* Dark gray text for contrast */
+			padding: 2px 4px;
+			/* Small padding for inline use */
+			border-radius: 4px;
+			/* Rounded corners */
+			font-family: Consolas, Monaco, 'Courier New', monospace;
+			font-size: 0.95em;
+		}
+
+		pre code {
+			display: block;
+			padding: 12px;
+			overflow-x: auto;
+			background-color: #f4f4f4;
+			/* Match inline code background */
+			border: 1px solid #ddd;
+		}
+
+		ul {
+			margin: 16px 0;
+			padding: 0;
+		}
+
+		ul li {
+			margin: 8px 0;
+			padding: 0;
+		}
+
+		.li-head- {
+			text-decoration: underline;
+		}
+
+		.li-strong {
+			font-weight: bold;
+			margin-left: 0 !important;
+		}
+
+		ul li .li-child {
+			padding-left: 16px;
+			list-style-type: circle;
+		}
+
+		ul li .lists-list {
+			list-style-type: square;
+		}
+
+		h1 {
+			font-size: 2.5em;
+			text-align: center;
+			color: #0073e6;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			/**********/
+			font-family: 'Helvetica Neue', Arial, sans-serif;
+			color: #000000;
+			margin: 10px 0;
+		}
+
+		h2 {
+			font-size: 2em;
+		}
+
+		h3 {
+			font-size: 1.75em;
+		}
+
+		h4 {
+			font-size: 1.5em;
+		}
+
+		h5 {
+			font-size: 1.25em;
+		}
+
+		h6 {
+			font-size: 1.1em;
+		}
+
+		p {
+			font-size: 1em;
+			color: #000000;
+			margin-bottom: 16px;
+		}
+
+		a {
+			color: teal;
+			font-variant: small-caps;
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus {
+			text-decoration: underline;
+			color: #00892E;
+		}
+
+		header a:hover,
+		header a:focus {
+			color: #333333;
+		}
+
+		.ai {
+			display: block;
+			width: 100vw !important;
+			height: 100vh;
+			overflow-y: scroll;
+			background: darkgray;
+			border: 1px solid #ccc;
+			margin: 0 auto;
+			padding: 0;
+		}
+
+		#notify-copy {
+			position: fixed;
+			top: 0;
+			right: 0;
+			left: 0;
+			width: 100vw;
+			background: #f2f2f2;
+			border: 3px solid teal;
+			padding-top: 4px;
+			text-align: center;
+		}
+
+		.hide {
+			display: none;
+			height: 0;
+		}
+
+		.show {
+			display: block;
+			min-height: 22px;
+		}
+
+		#custom-form {
+			vertical-align: top;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="notify-copy" class="hide"></div>
+
+	<header style="text-align: center; margin-top: 20px;">
+		<h1>AI Assist</h1>
+	</header>
+
+	<div class="container" style="text-align: center; margin-bottom: 0; display: block; max-width: 100vw; width: 100%;">
+		<h2>Do Your Research</h2>
+		<form action="https://www.google.com/search" method="get" target="_blank" style="margin-bottom: 20px;">
+			<input type="text" name="q" placeholder="Quick Google Search..." style="width: 70%; display: inline-block;">
+			<button type="submit" class="btn-small" style="width: 25%; display: inline-block;">Search</button>
+		</form>
+		<div>
+			<a href="https://gemini.google.com/" target="_blank" style="margin: 0 10px; font-weight: bold;">Google
+				Gemini</a> |
+			<a href="https://google.com/" target="_blank" style="margin: 0 10px; font-weight: bold;">Google</a> |
+			<a href="https://chatgpt.com/" target="_blank" style="margin: 0 10px; font-weight: bold;">ChatGPT</a> |
+			<a href="https://copilot.microsoft.com/" target="_blank" style="margin: 0 10px; font-weight: bold;">CoPilot
+				Online</a> |
+			<a href="https://duckduckgo.com/" target="_blank" style="margin: 0 10px; font-weight: bold;">DuckDuckGo</a>
+			|
+			<a href="https://bing.com/" target="_blank" style="margin: 0 10px; font-weight: bold;">Bing</a>
+		</div>
+	</div>
+
+	<div id="template-anchor"></div>
+	<br>
+	<p style="text-align: center;">Select a template below to begin prompting the model, replacing items like
+		<i>'EnterYourQuestionHEREdoubleCLickMe'</i> which was pasted in with your context.
+	</p>
+	<br>
+	<div style="text-align: center;">
+		<button class="btn-template" onclick="ai_general()">General Troubleshooting</button>
+		<button class="btn-template" onclick="ai_lead()">Generate Product Lead</button>
+		<button class="btn-template" onclick="ai_agent_question()">Summarize Agent Question</button>
+		<button class="btn-template" onclick="ai_article_list()">Create Search Keywords</button>
+		<button class="btn-template" onclick="ai_benefit_list()">List Product Benefits</button>
+		<button class="btn-template" style="background: DarkSlateBlue;"
+			onclick="document.getElementById('custom-form').classList.toggle('hide')">Show/Hide Custom Template
+			Creator</button>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div id="custom-buttons-container" class="container">
+		<h4>My Templates</h4>
+	</div>
+	<div id="custom-form" class="hide container">
+		<form onsubmit="return false;">
+			<h3>Create Custom Template</h3>
+
+			<label for="buttonText">Button Text:</label>
+			<input type="text" id="buttonText" placeholder="Enter button label">
+
+			<label for="templateContent">Template Content:</label>
+			<textarea id="templateContent" rows="6"
+				placeholder="Enter template content. Use \n for new lines."></textarea>
+			<br>
+			<label for="template_upload">Import Templates</label>
+			<input type="file" id="template_upload" name="template_upload" accept="text/csv, text/txt">
+			<button class="btn-small" onclick="addCustomTemplate()">Save/Import Template(s)</button>
+			<input type="reset" />
+
+			<p style="font-size: 14px; margin-bottom: 5px;">⚠️ Backup your templates regularly. Clearing browser data
+				will erase them.</p>
+			<button class="btn-small" onclick="exportTemplatesToCSV()">Export Templates</button>
+		</form>
+	</div>
+
+	<script>
+		/*CUSTOM TEMPLATE FUNCTIONS*/
+		var templates = [];
+		var duplicates_found = [];
+
+		function addCustomTemplate() {
+			const label_text = document.getElementById('buttonText').value.trim();
+			const content = document.getElementById('templateContent').value.trim();
+			const upload = document.getElementById('template_upload').files[0];
+
+			// check if it's an upload or inputs
+			if (upload) {
+				importTemplatesFromCSV(upload);
+				return;
+			}
+			if (!label_text || !content) {
+				notify("Both fields are required.");
+				return;
+			}
+
+			const template = { label_text, content };  // the rows of the template array
+			const rtemplates = get_runtime_templates(); // runtime storage for all active templates
+
+			if (run_dupe_check(rtemplates, template.label_text)) { notify('Template with that name already exist.'); return; };
+
+			// add new template to local copy
+			rtemplates.push(template);
+
+			//need to create one place to set the global templates array and check exists
+			set_localStorage_customTemplates(rtemplates);
+
+			update_DOM_buttons();  // add new template button to DOM
+
+			// clear the form
+			document.getElementById('buttonText').value = '';
+			document.getElementById('templateContent').value = '';
+		}
+
+		function appendCustomButton(dx) {
+			/* Adds a template to the DOM */
+			const container = document.getElementById('custom-buttons-container'); // parent elem of all template buttons
+
+			const wrapper = document.createElement('div'); // individual template wrapper
+
+			wrapper.style.display = 'flex';
+			wrapper.style.alignItems = 'center';
+			wrapper.style.gap = '5px';
+
+			const btn = document.createElement('button');
+
+			btn.innerText = dx.label_text;
+
+			btn.onclick = () => {
+				navigator.clipboard.writeText(dx.content.replace(/\\n/g, '\n'))
+					.then(() => notify("Custom template copied to clipboard!"))
+					.catch(err => alert("Failed to copy: " + err));
+			};
+
+			const close = document.createElement('span'); // the X delete icon for each template
+
+			close.innerText = "❌";
+			close.style.cursor = "pointer";
+			close.onclick = () => deleteTemplate(dx.label_text)();
+
+			wrapper.appendChild(btn);
+			wrapper.appendChild(close);
+
+			container.appendChild(wrapper);
+		}
+
+		function deleteTemplate(buttonText) {
+			return function () {
+				if (!confirm(`Are you sure you want to delete the template "${buttonText}"?`)) return;
+
+				//  recreate localStorage excluding the deleted template
+				let rtemplates = get_runtime_templates();
+				rtemplates = rtemplates.filter(t => t.label_text !== buttonText);
+				set_localStorage_customTemplates(rtemplates);  // update the storage and runtime
+
+				//  remove from DOM
+				const container = document.getElementById('custom-buttons-container');
+				[...container.children].forEach(child => {
+					const btn = child.querySelector('button');
+					if (btn && btn.innerText === buttonText) {
+						container.removeChild(child);
+					}
+				});
+			};
+		}
+
+		function exportTemplatesToCSV() {
+			const rtemplates = get_runtime_templates();
+
+			if (rtemplates.length === 0) {
+				notify("No templates to export, please create some.");
+				return;
+			}
+
+			const rows = [["Button Text", "Content"]];  // csv format with headers
+
+			rtemplates.forEach(t => rows.push([t.label_text, t.content]));  // convert to csv rows
+
+			const csvContent = rows.map(r =>
+				r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")
+			).join("\n");
+
+			//  download
+			const blob = new Blob([csvContent], { type: "text/csv" });
+			const url = URL.createObjectURL(blob);
+
+			const a = document.createElement("a");
+
+			a.href = url;
+			a.download = "intuitAssist_templates" + filename_date_stamp() + ".csv";
+			a.click();
+			URL.revokeObjectURL(url);
+			a.remove();
+		}
+
+		function importTemplatesFromCSV(file) {
+			if (!file) return notify("No file selected.");
+
+			const reader = new FileReader();
+			reader.onload = e => {
+				const text = e.target.result;
+				if (!text) return notify("File is empty.");
+
+				const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line); //  split & remove empty
+
+				if (lines.length < 2) return notify("No templates found in file."); //  only header
+
+				let imported = [];
+
+				//  skip header
+				for (let i = 1; i < lines.length; i++) {
+					const line = lines[i];
+					const parts = line.split(/,(.+)/); //  split on first comma
+					if (!parts[0]) continue; //  skip empty text
+					imported.push({
+						label_text: parts[0].replace(/(^"|"$)/g, "").trim(),
+						content: (parts[1] || "").replace(/(^"|"$)/g, "").trim()
+					});
+				}
+
+				if (imported.length === 0) return notify("No valid templates found in file.");
+
+				//  Merge into localStorage
+				let rtemplates = get_runtime_templates();
+
+				imported = remove_template_dupes(imported);
+
+				rtemplates = rtemplates.concat(imported);  // return updated array
+				set_localStorage_customTemplates(rtemplates);  // update the storage and runtime
+
+				update_DOM_buttons();  // append the new templates to DOM
+
+				notify(`${imported.length} templates imported successfully.`);
+			};
+
+			reader.onerror = () => notify("Failed to read file.");
+			reader.readAsText(file);
+		}
+
+		//  UTILITIES
+		function set_localStorage_customTemplates(dx) {
+			/*
+				Creates a localStorage item named customTemplates which holds an array of template object rows: [{headword, item_content}].
+				dx: templates array
+			*/
+
+			try {
+				localStorage.setItem("customTemplates", JSON.stringify(dx));
+			} catch (err) {
+				notify('Unable to set your localStorage, was blocked or encountered an error.');
+			}
+
+			set_runtime_templates(dx);  // update runtime copy
+		}
+
+		function filename_date_stamp() {
+			const now = new Date();
+			const day = String(now.getDate()).padStart(2, '0');
+			const hours = String(now.getHours()).padStart(2, '0');
+			const minutes = String(now.getMinutes()).padStart(2, '0');
+			const seconds = String(now.getSeconds()).padStart(2, '0');
+			const filenameDateTime = `${day}_${hours}_${minutes}_${seconds}`;
+			return filenameDateTime;
+		}
+
+		function get_runtime_templates() {
+			return templates;
+		}
+
+		function get_templates_from_storage() {
+			try {
+				const template_stor = JSON.parse(localStorage.getItem("customTemplates") || "[]");
+
+				if (!(template_stor.length > 0)) notify("No templates found. Please import or create a template.");
+
+				return template_stor;
+			} catch (err) {
+				notify("Unable to access localStorage. Please import or create a template.");
+				return [];
+			}
+		}
+
+		function template_dupe_check(dx, dy) {
+			return dx.some(t => t.label_text === dy);
+		}
+
+		function run_dupe_check(dx, dy) {
+			if (template_dupe_check(dx, dy)) {
+				notify("Duplicate template found.");
+				return 1;
+			}
+			return 0;
+		}
+
+		function run_dupe_pos_check(dx) {
+			let found = get_runtime_templates().findIndex(t => t.label_text === dx.label_text);
+			if (found !== -1) {  // found in check
+				mark_for_removal(dx); // mark for removal
+			}
+			return;
+		}
+
+		function update_DOM_buttons() {
+			const container = document.getElementById('custom-buttons-container');
+			container.innerHTML = ''; // clear all existing buttons
+			templates.forEach(appendCustomButton);
+		}
+
+		function set_runtime_templates(dx) {
+			templates.splice(0, templates.length, ...dx);
+		}
+
+		function mark_for_removal(dx) {
+			duplicates_found.push(dx);
+		}
+
+		function remove_template_dupes(dx) {
+			dx.forEach(dy => run_dupe_pos_check(dy));  // find all positions of duplicates and populate duplicates_found global
+
+			if (duplicates_found.length > 0) {
+				// filter out duplicates from imported
+				dx = dx.filter(x => !duplicates_found.some(dy => dy.label_text === x.label_text));
+			}
+
+			return dx;
+		}
+
+		window.onload = () => {
+			const stored = get_templates_from_storage();
+			set_runtime_templates(stored);
+			update_DOM_buttons();
+		};
+
+	</script>
+
+
+	<script>
+		const notification_area = document.getElementById('notify-copy');
+		const lead = `System: You are a support agent. DO NOT mention specific pricing. Suggest RELATED PRODUCTS & SERVICES, not just features. Be informative.
+
+Task: Craft 3 sentences to generate additional related product subscriptions opportunities for the customer.
+
+Current Packages: EnterPackageNameHEREdoubleCLickMe`;
+
+		const general = `System: You are a technical expert. DO NOT assume the agent understands all intermediary steps. Be informative and provide detailed, step-by-step breakdowns.
+
+Question: EnterYourQuestionHEREdoubleCLickMe`;
+
+		const agent_question = `System: You are an escalation engineer. Summarize the following question using bullet points, include a brief re-summary, and reorder it into a clear troubleshooting path.
+
+Agent Question: EnterYourQuestionHEREdoubleCLickMe`;
+
+		const article_list = `System: You are a knowledge base expert. Craft optimized search phrases or keywords for the support search bar. Carefully render links as lists and provide brief summaries per bullet.
+
+Scenario: EnterYourQuestionHEREdoubleCLickMe`;
+
+		const benefit_list = `System: You are a support agent. Suggest RELATED PRODUCTS & SERVICES. DO NOT mention pricing. Be informative. Suggested articles must refer to growth driving or product knowledge.
+
+Task: What are the benefits of having the Service/Feature/Product: EnterItemNameHEREdoubleCLickMe?`;
+
+		//  TEMPLATE FUNCTIONS
+		function ai_lead() {
+			navigator.clipboard.writeText(lead)
+				.then(() => notify("Template copied to clipboard!"))
+				.catch(err => alert("Failed to copy template: " + err));
+		}
+		function ai_general() {
+			navigator.clipboard.writeText(general)
+				.then(() => notify("Template copied to clipboard!"))
+				.catch(err => alert("Failed to copy template: " + err));
+		}
+		function ai_agent_question() {
+			navigator.clipboard.writeText(agent_question)
+				.then(() => notify("Template copied to clipboard!"))
+				.catch(err => alert("Failed to copy template: " + err));
+		}
+		function ai_article_list() {
+			navigator.clipboard.writeText(article_list)
+				.then(() => notify("Template copied to clipboard!"))
+				.catch(err => alert("Failed to copy template: " + err));
+		}
+		function ai_benefit_list() {
+			navigator.clipboard.writeText(benefit_list)
+				.then(() => notify("Template copied to clipboard!"))
+				.catch(err => alert("Failed to copy template: " + err));
+		}
+		/* NOTIFICATIONS */
+		function notify(x) {
+			setTimeout(() => { show(x); }, 400); // .4sec
+			setTimeout(() => { hide(x); }, 2400); // 2.4sec 2sec-delay-.4under-reaction-time
+		}
+		function hide(x) {
+			notification_area.classList = "hide";
+
+		}
+		function show(x) {
+			notification_area.innerText = x;
+			notification_area.classList = "show";
+		}
+	</script>
+</body>
+
+</html>
